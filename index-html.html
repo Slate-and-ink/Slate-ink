@@ -1,0 +1,395 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Slate &amp; Ink — Tutoring &amp; Copywriting</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,500;0,9..144,700;0,9..144,900;1,9..144,600&family=Space+Grotesk:wght@400;500;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --ink: #1c2b23;
+    --chalk: #f4f0e4;
+    --board: #21362c;
+    --board-dark: #182720;
+    --marigold: #e2a33d;
+    --rickshaw: #c1442e;
+    --line: rgba(28,43,35,0.16);
+    --chalk-line: rgba(244,240,228,0.25);
+  }
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{
+    margin:0;
+    background:var(--chalk);
+    color:var(--ink);
+    font-family:'Space Grotesk', sans-serif;
+    -webkit-font-smoothing:antialiased;
+  }
+  @media (prefers-reduced-motion: reduce){
+    *{animation:none !important; transition:none !important;}
+  }
+
+  /* ambient ruled-paper texture */
+  body{
+    background-image:
+      repeating-linear-gradient(transparent, transparent 37px, var(--line) 38px);
+  }
+
+  .wrap{max-width:880px; margin:0 auto; padding:0 24px;}
+
+  /* ---------- HERO ---------- */
+  header.hero{
+    padding:72px 0 56px;
+    position:relative;
+    border-bottom:3px solid var(--ink);
+  }
+  .eyebrow{
+    font-family:'Space Mono', monospace;
+    font-size:13px;
+    letter-spacing:0.14em;
+    text-transform:uppercase;
+    color:var(--rickshaw);
+    margin:0 0 18px;
+    display:flex;
+    align-items:center;
+    gap:10px;
+  }
+  .eyebrow::before{
+    content:"";
+    width:22px; height:2px;
+    background:var(--rickshaw);
+    display:inline-block;
+  }
+  h1.name{
+    font-family:'Fraunces', serif;
+    font-weight:900;
+    font-size:clamp(52px, 12vw, 96px);
+    line-height:0.92;
+    margin:0 0 14px;
+    letter-spacing:-0.01em;
+  }
+  h1.name em{
+    font-style:italic;
+    font-weight:600;
+    color:var(--rickshaw);
+  }
+  .tagline{
+    font-size:clamp(17px, 2.6vw, 21px);
+    max-width:520px;
+    line-height:1.5;
+    margin:0 0 32px;
+    color:var(--ink);
+    opacity:0.85;
+  }
+  .hero-cta{
+    display:flex;
+    gap:14px;
+    flex-wrap:wrap;
+  }
+  .btn{
+    font-family:'Space Grotesk', sans-serif;
+    font-weight:700;
+    font-size:15px;
+    padding:14px 24px;
+    border-radius:2px;
+    text-decoration:none;
+    display:inline-flex;
+    align-items:center;
+    gap:8px;
+    border:2px solid var(--ink);
+    transition:transform 0.15s ease, box-shadow 0.15s ease;
+  }
+  .btn-solid{
+    background:var(--ink);
+    color:var(--chalk);
+  }
+  .btn-solid:hover{
+    transform:translate(-2px,-2px);
+    box-shadow:4px 4px 0 var(--rickshaw);
+  }
+  .btn-outline{
+    background:transparent;
+    color:var(--ink);
+  }
+  .btn-outline:hover{
+    transform:translate(-2px,-2px);
+    box-shadow:4px 4px 0 var(--marigold);
+  }
+
+  /* ---------- SERVICES (chalkboard panels) ---------- */
+  section.services{padding:64px 0 24px;}
+  .section-label{
+    font-family:'Space Mono', monospace;
+    font-size:13px;
+    letter-spacing:0.14em;
+    text-transform:uppercase;
+    color:var(--ink);
+    opacity:0.55;
+    margin:0 0 28px;
+  }
+  .boards{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:20px;
+  }
+  @media (max-width:640px){ .boards{grid-template-columns:1fr;} }
+
+  .board{
+    background:var(--board);
+    color:var(--chalk);
+    border-radius:6px;
+    padding:30px 26px 26px;
+    position:relative;
+    box-shadow: 0 10px 0 -4px rgba(0,0,0,0.15), 0 14px 22px rgba(0,0,0,0.18);
+    border: 6px solid #4a3323;
+  }
+  .board::before{
+    content:"";
+    position:absolute; inset:10px;
+    border:1px dashed var(--chalk-line);
+    border-radius:3px;
+    pointer-events:none;
+  }
+  .board h3{
+    font-family:'Fraunces', serif;
+    font-weight:700;
+    font-style:italic;
+    font-size:28px;
+    margin:0 0 6px;
+  }
+  .board .price{
+    font-family:'Space Mono', monospace;
+    font-size:14px;
+    color:var(--marigold);
+    margin:0 0 18px;
+  }
+  .board ul{
+    margin:0; padding:0; list-style:none;
+  }
+  .board li{
+    font-size:14.5px;
+    line-height:1.6;
+    padding-left:18px;
+    position:relative;
+    opacity:0.92;
+    margin-bottom:6px;
+  }
+  .board li::before{
+    content:"✕";
+    position:absolute; left:0; top:1px;
+    color:var(--chalk);
+    opacity:0.5;
+    font-size:12px;
+  }
+
+  /* ---------- ABOUT STRIP ---------- */
+  section.about{
+    padding:56px 0;
+    display:grid;
+    grid-template-columns:auto 1fr;
+    gap:22px;
+    align-items:start;
+    border-bottom:1px solid var(--line);
+  }
+  @media (max-width:560px){ section.about{grid-template-columns:1fr;} }
+  .about-num{
+    font-family:'Fraunces', serif;
+    font-style:italic;
+    font-weight:600;
+    font-size:15px;
+    color:var(--rickshaw);
+    white-space:nowrap;
+  }
+  .about p{
+    margin:0;
+    font-size:16px;
+    line-height:1.7;
+    max-width:560px;
+  }
+
+  /* ---------- RECEIPT / CONTACT ---------- */
+  section.contact{padding:64px 0 90px;}
+  .receipt{
+    background:#fffdf7;
+    max-width:400px;
+    margin:0 auto;
+    padding:32px 28px 28px;
+    font-family:'Space Mono', monospace;
+    color:var(--ink);
+    box-shadow:0 18px 40px rgba(28,43,35,0.18);
+    position:relative;
+    transition:transform 0.2s ease;
+    transform-origin:50% 15%;
+    touch-action: manipulation;
+  }
+  .receipt:hover{ transform:translateY(-4px) rotate(-0.4deg); }
+  .receipt.wobble{
+    animation: paperWobble 0.7s ease;
+  }
+  @keyframes paperWobble{
+    0%   { transform: rotate(0deg) translateY(0); }
+    15%  { transform: rotate(-4deg) translateY(-3px); }
+    30%  { transform: rotate(3.5deg) translateY(-1px); }
+    45%  { transform: rotate(-2.5deg); }
+    60%  { transform: rotate(1.8deg); }
+    75%  { transform: rotate(-1deg); }
+    90%  { transform: rotate(0.4deg); }
+    100% { transform: rotate(0deg) translateY(0); }
+  }
+  .receipt::after{
+    content:"";
+    position:absolute; left:0; right:0; bottom:-9px; height:18px;
+    background:
+      linear-gradient(-45deg, transparent 8px, #fffdf7 8px) 0 0/16px 16px,
+      linear-gradient(45deg, transparent 8px, #fffdf7 8px) 0 0/16px 16px;
+    background-repeat:repeat-x;
+    filter:drop-shadow(0 6px 4px rgba(0,0,0,0.12));
+  }
+  .receipt h4{
+    text-align:center;
+    font-size:15px;
+    letter-spacing:0.1em;
+    text-transform:uppercase;
+    margin:0 0 4px;
+  }
+  .receipt .sub{
+    text-align:center;
+    font-size:11px;
+    opacity:0.55;
+    margin:0 0 18px;
+  }
+  .receipt hr{
+    border:none;
+    border-top:1px dashed var(--line);
+    margin:14px 0;
+  }
+  .receipt-row{
+    display:flex;
+    justify-content:space-between;
+    font-size:13px;
+    margin-bottom:10px;
+    gap:12px;
+  }
+  .receipt-row span:first-child{opacity:0.6;}
+  .receipt-row a{
+    color:var(--ink);
+    font-weight:700;
+    text-decoration:none;
+    border-bottom:1px solid var(--rickshaw);
+  }
+  .receipt-total{
+    display:flex; justify-content:space-between;
+    font-size:14px; font-weight:700;
+    margin-top:16px;
+  }
+  .receipt-cta{
+    display:block;
+    text-align:center;
+    margin-top:22px;
+    background:var(--ink);
+    color:var(--chalk);
+    padding:13px;
+    font-weight:700;
+    text-decoration:none;
+    font-size:13px;
+    letter-spacing:0.04em;
+  }
+  .receipt-cta:hover{ background:var(--rickshaw); }
+
+  footer{
+    text-align:center;
+    padding:28px 0 44px;
+    font-family:'Space Mono', monospace;
+    font-size:12px;
+    opacity:0.45;
+  }
+
+  .edit-flag{
+    background:var(--marigold);
+    color:var(--ink);
+    font-family:'Space Mono', monospace;
+    font-size:11px;
+    padding:1px 6px;
+    border-radius:3px;
+    margin-left:6px;
+  }
+</style>
+</head>
+<body>
+
+<div class="wrap">
+  <header class="hero">
+    <p class="eyebrow">Available for work</p>
+    <h1 class="name">Slate<br><em>&amp; Ink.</em></h1>
+    <p class="tagline">Tutoring bundles for students up to Class 8, and copy that sells — clear words, on time, at student-friendly rates.</p>
+    <div class="hero-cta">
+      <a class="btn btn-solid" href="#contact">Hire me →</a>
+      <a class="btn btn-outline" href="#services">See services</a>
+    </div>
+  </header>
+
+  <section class="services" id="services">
+    <p class="section-label">What I do</p>
+    <div class="boards">
+      <div class="board">
+        <h3>Tutoring</h3>
+        <p class="price">৳1000 / month</p>
+        <ul>
+          <li>Math + Science + English + 1 subject of choice</li>
+          <li>Class 8 and below</li>
+          <li>Online or in-person</li>
+          <li>First session free trial</li>
+        </ul>
+      </div>
+      <div class="board">
+        <h3>Copywriting</h3>
+        <p class="price">৳250 / commission</p>
+        <ul>
+          <li>Blog posts &amp; articles</li>
+          <li>Social media captions</li>
+          <li>Product descriptions</li>
+          <li>2 free revisions included</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <section class="about">
+    <span class="about-num">01 — why me</span>
+    <p>Currently prepping for college, so I know the syllabus, the pressure, and the deadlines firsthand. Slate &amp; Ink is me — I write and teach the way I'd want someone to explain it to me: plainly, and without wasting your time.</p>
+  </section>
+
+  <section class="contact" id="contact">
+    <p class="section-label" style="text-align:center;">Get in touch</p>
+    <div class="receipt">
+      <h4>Hire Slate &amp; Ink</h4>
+      <p class="sub">no. 001 · run by Sahel</p>
+      <hr>
+      <div class="receipt-row"><span>WhatsApp</span><a href="https://wa.me/8801631001030">+880 1631-001030</a></div>
+      <div class="receipt-row"><span>Email</span><a href="mailto:saheluddin754@gmail.com">saheluddin754@gmail.com</a></div>
+      <div class="receipt-row"><span>Response time</span><span>within 24h</span></div>
+      <hr>
+      <div class="receipt-total"><span>Total cost to reach out</span><span>৳0.00</span></div>
+      <a class="receipt-cta" href="https://wa.me/8801631001030">Message on WhatsApp</a>
+    </div>
+  </section>
+
+  <footer>Slate &amp; Ink · run by Sahel</footer>
+</div>
+
+<script>
+  const receipt = document.querySelector('.receipt');
+  function triggerWobble(){
+    receipt.classList.remove('wobble');
+    // force reflow so the animation can replay
+    void receipt.offsetWidth;
+    receipt.classList.add('wobble');
+  }
+  receipt.addEventListener('touchstart', triggerWobble, {passive:true});
+  receipt.addEventListener('click', triggerWobble);
+  receipt.addEventListener('animationend', () => receipt.classList.remove('wobble'));
+</script>
+
+</body>
+</html>
