@@ -30,16 +30,11 @@
   @media (prefers-reduced-motion: reduce){
     *{animation:none !important; transition:none !important;}
   }
-
-  /* ambient ruled-paper texture */
   body{
     background-image:
       repeating-linear-gradient(transparent, transparent 37px, var(--line) 38px);
   }
-
   .wrap{max-width:880px; margin:0 auto; padding:0 24px;}
-
-  /* ---------- HERO ---------- */
   header.hero{
     padding:72px 0 56px;
     position:relative;
@@ -128,8 +123,6 @@
     transform:translate(-2px,-2px);
     box-shadow:4px 4px 0 var(--marigold);
   }
-
-  /* ---------- SERVICES (chalkboard panels) ---------- */
   section.services{padding:64px 0 24px;}
   .section-label{
     font-family:'Space Mono', monospace;
@@ -146,7 +139,6 @@
     gap:20px;
   }
   @media (max-width:640px){ .boards{grid-template-columns:1fr;} }
-
   .board{
     background:var(--board);
     color:var(--chalk);
@@ -196,8 +188,6 @@
     opacity:0.5;
     font-size:12px;
   }
-
-  /* ---------- DOODLE CHALKBOARD ---------- */
   section.doodle{padding:16px 0 56px;}
   .chalkboard-wrap{
     background:var(--board);
@@ -257,8 +247,6 @@
     transition:background 0.15s ease;
   }
   .chalk-clear:hover{ background:rgba(244,240,228,0.12); }
-
-
   section.about{
     padding:56px 0;
     display:grid;
@@ -283,12 +271,12 @@
     font-size:22px;
     line-height:1.45;
     max-width:580px;
-    min-height:3.4em;
     opacity:0.9;
   }
+  .about p + p {
+    margin-top: 18px;
+  }
   .board li[data-type]{ min-height:1.5em; }
-
-  /* ---------- RECEIPT / CONTACT ---------- */
   section.contact{padding:64px 0 90px;}
   .receipt-fold-wrap{ perspective:1400px; }
   .receipt{
@@ -402,7 +390,6 @@
     letter-spacing:0.04em;
   }
   .receipt-cta:hover{ background:var(--rickshaw); }
-
   footer{
     text-align:center;
     padding:28px 0 44px;
@@ -410,20 +397,9 @@
     font-size:12px;
     opacity:0.45;
   }
-
-  .edit-flag{
-    background:var(--marigold);
-    color:var(--ink);
-    font-family:'Space Mono', monospace;
-    font-size:11px;
-    padding:1px 6px;
-    border-radius:3px;
-    margin-left:6px;
-  }
 </style>
 </head>
 <body>
-
 <div class="wrap">
   <header class="hero">
     <p class="eyebrow">Available for work</p>
@@ -476,9 +452,13 @@
     </div>
   </section>
 
-  <section class="about">
-    <span class="about-num">01 — why me</span>
-    <p data-type>Currently prepping for college, so I know the syllabus, the pressure, and the deadlines firsthand. Slate &amp; Ink is me — I write and teach the way I'd want someone to explain it to me: plainly, and without wasting your time.</p>
+  <section class="about" id="about">
+    <span class="about-num">01 — about me</span>
+    <div>
+      <p data-type>I’m Sahel — currently preparing for Class 11 (college). Between studying and deadlines, I run Slate &amp; Ink as a side hustle: tutoring students up to Class 8 and writing clear, honest copy.</p>
+      <p data-type>English is my strongest subject (and the one I enjoy teaching most). I explain things the way I wish someone had explained them to me — simply, patiently, and without the fluff. Same approach when I write: no fancy words, just what works.</p>
+      <p data-type>I know the pressure of the syllabus and the rush of last-minute work firsthand. That’s why I keep rates student-friendly, stay reachable, and deliver on time. No big agency energy — just one person who actually cares about the work.</p>
+    </div>
   </section>
 
   <section class="contact" id="contact">
@@ -502,17 +482,15 @@
 </div>
 
 <script>
-  /* ---------- scroll-linked text reveal ---------- */
   const revealEls = Array.from(document.querySelectorAll('[data-type]')).map(el=>{
     el.dataset.full = el.textContent;
     el.textContent = '';
     return el;
   });
-
   function updateReveal(){
     const vh = window.innerHeight;
-    const startY = vh * 0.92;   // reveal begins as element enters near bottom of viewport
-    const endY = vh * 0.4;      // fully revealed once element reaches upper-middle
+    const startY = vh * 0.92;
+    const endY = vh * 0.4;
     revealEls.forEach(el=>{
       const rect = el.getBoundingClientRect();
       let progress = (startY - rect.top) / (startY - endY);
@@ -527,7 +505,6 @@
       }
     });
   }
-
   let revealTicking = false;
   function onRevealScroll(){
     if(!revealTicking){
@@ -539,14 +516,12 @@
   window.addEventListener('resize', onRevealScroll);
   updateReveal();
 
-  /* ---------- chalkboard drawing ---------- */
   (function(){
     const canvas = document.getElementById('chalkboard');
     const ctx = canvas.getContext('2d');
     let color = '#f4f0e4';
     let drawing = false;
     let last = null;
-
     function resize(){
       const rect = canvas.getBoundingClientRect();
       const dpr = window.devicePixelRatio || 1;
@@ -560,7 +535,6 @@
     }
     window.addEventListener('resize', resize);
     resize();
-
     function pos(e){
       const rect = canvas.getBoundingClientRect();
       return { x: e.clientX - rect.left, y: e.clientY - rect.top };
@@ -587,12 +561,10 @@
       last = p;
     }
     function endDraw(){ drawing = false; last = null; }
-
     canvas.addEventListener('pointerdown', startDraw);
     canvas.addEventListener('pointermove', draw);
     canvas.addEventListener('pointerup', endDraw);
     canvas.addEventListener('pointerleave', endDraw);
-
     document.querySelectorAll('.chalk-swatch').forEach(btn=>{
       btn.addEventListener('click', ()=>{
         document.querySelectorAll('.chalk-swatch').forEach(b=>b.classList.remove('active'));
@@ -605,10 +577,8 @@
     });
   })();
 
-  /* ---------- receipt paper unfold + handwriting ---------- */
   (function(){
     const receipt = document.getElementById('receipt');
-
     function typeHW(el, text, speed){
       speed = speed || 34;
       return new Promise(resolve=>{
@@ -627,19 +597,16 @@
         })();
       });
     }
-
     async function runHandwriting(){
       await typeHW(document.getElementById('hwWhatsapp'), '+880 1631-001030');
       await typeHW(document.getElementById('hwEmail'), 'saheluddin754@gmail.com', 26);
       await typeHW(document.getElementById('hwResponse'), 'within 24h');
     }
-
     function triggerWobble(){
       receipt.classList.remove('wobble');
       void receipt.offsetWidth;
       receipt.classList.add('wobble');
     }
-
     const foldIO = new IntersectionObserver((entries)=>{
       entries.forEach(entry=>{
         if(entry.isIntersecting){
@@ -650,7 +617,6 @@
       });
     }, {threshold:0.3});
     foldIO.observe(receipt);
-
     receipt.addEventListener('touchstart', ()=>{
       if(receipt.classList.contains('unfolded')) triggerWobble();
     }, {passive:true});
@@ -660,6 +626,5 @@
     receipt.addEventListener('animationend', ()=> receipt.classList.remove('wobble'));
   })();
 </script>
-
 </body>
 </html>
