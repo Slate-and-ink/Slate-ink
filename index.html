@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Slate &amp; Ink — Tutoring &amp; Copywriting</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,500;0,9..144,700;0,9..144,900;1,9..144,600&family=Space+Grotesk:wght@400;500;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,500;0,9..144,700;0,9..144,900;1,9..144,600&family=Space+Grotesk:wght@400;500;700&family=Space+Mono:wght@400;700&family=Caveat:wght@600;700&display=swap" rel="stylesheet">
 <style>
   :root{
     --ink: #1c2b23;
@@ -14,6 +14,7 @@
     --board-dark: #182720;
     --marigold: #e2a33d;
     --rickshaw: #c1442e;
+    --chalk-blue: #7bb8cf;
     --line: rgba(28,43,35,0.16);
     --chalk-line: rgba(244,240,228,0.25);
   }
@@ -75,13 +76,24 @@
     color:var(--rickshaw);
   }
   .tagline{
-    font-size:clamp(17px, 2.6vw, 21px);
-    max-width:520px;
-    line-height:1.5;
+    font-family:'Caveat', cursive;
+    font-weight:700;
+    font-size:clamp(22px, 3.6vw, 30px);
+    max-width:540px;
+    line-height:1.35;
     margin:0 0 32px;
     color:var(--ink);
-    opacity:0.85;
+    opacity:0.9;
+    min-height:1.5em;
   }
+  [data-type].typing-cursor::after{
+    content:"|";
+    display:inline-block;
+    margin-left:2px;
+    animation: blink 0.85s step-end infinite;
+    color:var(--rickshaw);
+  }
+  @keyframes blink{ 50%{ opacity:0; } }
   .hero-cta{
     display:flex;
     gap:14px;
@@ -168,12 +180,14 @@
     margin:0; padding:0; list-style:none;
   }
   .board li{
-    font-size:14.5px;
-    line-height:1.6;
+    font-family:'Caveat', cursive;
+    font-weight:700;
+    font-size:19px;
+    line-height:1.5;
     padding-left:18px;
     position:relative;
-    opacity:0.92;
-    margin-bottom:6px;
+    opacity:0.95;
+    margin-bottom:2px;
   }
   .board li::before{
     content:"✕";
@@ -183,7 +197,68 @@
     font-size:12px;
   }
 
-  /* ---------- ABOUT STRIP ---------- */
+  /* ---------- DOODLE CHALKBOARD ---------- */
+  section.doodle{padding:16px 0 56px;}
+  .chalkboard-wrap{
+    background:var(--board);
+    border-radius:6px;
+    padding:16px 16px 14px;
+    border:6px solid #4a3323;
+    box-shadow: 0 10px 0 -4px rgba(0,0,0,0.15), 0 14px 22px rgba(0,0,0,0.18);
+  }
+  .chalkboard-hint{
+    font-family:'Caveat', cursive;
+    font-weight:700;
+    font-size:17px;
+    color:var(--chalk);
+    opacity:0.6;
+    margin:0 0 10px;
+    min-height:1.3em;
+  }
+  #chalkboard{
+    width:100%;
+    height:260px;
+    display:block;
+    border-radius:3px;
+    background:var(--board-dark);
+    touch-action:none;
+    cursor:crosshair;
+  }
+  .chalk-tools{
+    display:flex;
+    align-items:center;
+    gap:10px;
+    margin-top:14px;
+    flex-wrap:wrap;
+  }
+  .chalk-swatch{
+    width:30px; height:30px;
+    border-radius:50%;
+    border:2px solid rgba(244,240,228,0.35);
+    cursor:pointer;
+    padding:0;
+    transition:transform 0.15s ease, box-shadow 0.15s ease;
+  }
+  .chalk-swatch:hover{ transform:scale(1.1); }
+  .chalk-swatch.active{
+    box-shadow:0 0 0 3px var(--chalk);
+    transform:scale(1.12);
+  }
+  .chalk-clear{
+    margin-left:auto;
+    font-family:'Space Mono', monospace;
+    font-size:12px;
+    color:var(--chalk);
+    background:transparent;
+    border:1px solid rgba(244,240,228,0.35);
+    border-radius:3px;
+    padding:8px 14px;
+    cursor:pointer;
+    transition:background 0.15s ease;
+  }
+  .chalk-clear:hover{ background:rgba(244,240,228,0.12); }
+
+
   section.about{
     padding:56px 0;
     display:grid;
@@ -202,14 +277,20 @@
     white-space:nowrap;
   }
   .about p{
+    font-family:'Caveat', cursive;
+    font-weight:700;
     margin:0;
-    font-size:16px;
-    line-height:1.7;
-    max-width:560px;
+    font-size:22px;
+    line-height:1.45;
+    max-width:580px;
+    min-height:3.4em;
+    opacity:0.9;
   }
+  .board li[data-type]{ min-height:1.5em; }
 
   /* ---------- RECEIPT / CONTACT ---------- */
   section.contact{padding:64px 0 90px;}
+  .receipt-fold-wrap{ perspective:1400px; }
   .receipt{
     background:#fffdf7;
     max-width:400px;
@@ -219,11 +300,25 @@
     color:var(--ink);
     box-shadow:0 18px 40px rgba(28,43,35,0.18);
     position:relative;
-    transition:transform 0.2s ease;
-    transform-origin:50% 15%;
+    transition:transform 0.9s cubic-bezier(.2,.9,.25,1), opacity 0.6s ease;
+    transform-origin:50% 0%;
+    transform:scaleY(0.07) rotateX(-25deg);
+    opacity:0.5;
     touch-action: manipulation;
   }
-  .receipt:hover{ transform:translateY(-4px) rotate(-0.4deg); }
+  .receipt.unfolded{
+    transform:scaleY(1) rotateX(0deg);
+    opacity:1;
+  }
+  .receipt.unfolded:hover{ transform:translateY(-4px) rotate(-0.4deg); }
+  .receipt::before{
+    content:"";
+    position:absolute; left:8%; right:8%; top:50%;
+    border-top:1px dashed rgba(28,43,35,0.25);
+    opacity:0;
+    transition:opacity 0.4s ease 0.5s;
+  }
+  .receipt.unfolded::before{ opacity:1; }
   .receipt.wobble{
     animation: paperWobble 0.7s ease;
   }
@@ -270,6 +365,7 @@
     font-size:13px;
     margin-bottom:10px;
     gap:12px;
+    align-items:baseline;
   }
   .receipt-row span:first-child{opacity:0.6;}
   .receipt-row a{
@@ -277,6 +373,16 @@
     font-weight:700;
     text-decoration:none;
     border-bottom:1px solid var(--rickshaw);
+  }
+  .hw{
+    font-family:'Caveat', cursive;
+    font-size:19px;
+    font-weight:700;
+  }
+  .hw.typing-cursor::after{
+    content:"|";
+    margin-left:1px;
+    animation: blink 0.85s step-end infinite;
   }
   .receipt-total{
     display:flex; justify-content:space-between;
@@ -322,7 +428,7 @@
   <header class="hero">
     <p class="eyebrow">Available for work</p>
     <h1 class="name">Slate<br><em>&amp; Ink.</em></h1>
-    <p class="tagline">Tutoring bundles for students up to Class 8, and copy that sells — clear words, on time, at student-friendly rates.</p>
+    <p class="tagline" data-type>Tutoring bundles for students up to Class 8, and copy that sells — clear words, on time, at student-friendly rates.</p>
     <div class="hero-cta">
       <a class="btn btn-solid" href="#contact">Hire me →</a>
       <a class="btn btn-outline" href="#services">See services</a>
@@ -336,42 +442,59 @@
         <h3>Tutoring</h3>
         <p class="price">৳1000 / month</p>
         <ul>
-          <li>Math + Science + English + 1 subject of choice</li>
-          <li>Class 8 and below</li>
-          <li>Online or in-person</li>
-          <li>First session free trial</li>
+          <li data-type>Math + Science + English + 1 subject of choice</li>
+          <li data-type>Class 8 and below</li>
+          <li data-type>Online or in-person</li>
+          <li data-type>First session free trial</li>
         </ul>
       </div>
       <div class="board">
         <h3>Copywriting</h3>
         <p class="price">৳250 / commission</p>
         <ul>
-          <li>Blog posts &amp; articles</li>
-          <li>Social media captions</li>
-          <li>Product descriptions</li>
-          <li>2 free revisions included</li>
+          <li data-type>Blog posts &amp; articles</li>
+          <li data-type>Social media captions</li>
+          <li data-type>Product descriptions</li>
+          <li data-type>2 free revisions included</li>
         </ul>
+      </div>
+    </div>
+  </section>
+
+  <section class="doodle" id="doodle">
+    <p class="section-label">Leave your mark</p>
+    <div class="chalkboard-wrap">
+      <p class="chalkboard-hint" data-type>draw something before you go</p>
+      <canvas id="chalkboard"></canvas>
+      <div class="chalk-tools">
+        <button class="chalk-swatch active" data-color="#f4f0e4" style="background:#f4f0e4" aria-label="white chalk"></button>
+        <button class="chalk-swatch" data-color="#e2a33d" style="background:#e2a33d" aria-label="yellow chalk"></button>
+        <button class="chalk-swatch" data-color="#c1442e" style="background:#c1442e" aria-label="red chalk"></button>
+        <button class="chalk-swatch" data-color="#7bb8cf" style="background:#7bb8cf" aria-label="blue chalk"></button>
+        <button class="chalk-clear" id="chalkClear">Clear ✕</button>
       </div>
     </div>
   </section>
 
   <section class="about">
     <span class="about-num">01 — why me</span>
-    <p>Currently prepping for college, so I know the syllabus, the pressure, and the deadlines firsthand. Slate &amp; Ink is me — I write and teach the way I'd want someone to explain it to me: plainly, and without wasting your time.</p>
+    <p data-type>Currently prepping for college, so I know the syllabus, the pressure, and the deadlines firsthand. Slate &amp; Ink is me — I write and teach the way I'd want someone to explain it to me: plainly, and without wasting your time.</p>
   </section>
 
   <section class="contact" id="contact">
     <p class="section-label" style="text-align:center;">Get in touch</p>
-    <div class="receipt">
-      <h4>Hire Slate &amp; Ink</h4>
-      <p class="sub">no. 001 · run by Sahel</p>
-      <hr>
-      <div class="receipt-row"><span>WhatsApp</span><a href="https://wa.me/8801631001030">+880 1631-001030</a></div>
-      <div class="receipt-row"><span>Email</span><a href="mailto:saheluddin754@gmail.com">saheluddin754@gmail.com</a></div>
-      <div class="receipt-row"><span>Response time</span><span>within 24h</span></div>
-      <hr>
-      <div class="receipt-total"><span>Total cost to reach out</span><span>৳0.00</span></div>
-      <a class="receipt-cta" href="https://wa.me/8801631001030">Message on WhatsApp</a>
+    <div class="receipt-fold-wrap">
+      <div class="receipt" id="receipt">
+        <h4>Hire Slate &amp; Ink</h4>
+        <p class="sub">no. 001 · run by Sahel</p>
+        <hr>
+        <div class="receipt-row"><span>WhatsApp</span><a href="https://wa.me/8801631001030"><span class="hw" id="hwWhatsapp"></span></a></div>
+        <div class="receipt-row"><span>Email</span><a href="mailto:saheluddin754@gmail.com"><span class="hw" id="hwEmail"></span></a></div>
+        <div class="receipt-row"><span>Response time</span><span class="hw" id="hwResponse"></span></div>
+        <hr>
+        <div class="receipt-total"><span>Total cost to reach out</span><span>৳0.00</span></div>
+        <a class="receipt-cta" href="https://wa.me/8801631001030">Message on WhatsApp</a>
+      </div>
     </div>
   </section>
 
@@ -379,16 +502,163 @@
 </div>
 
 <script>
-  const receipt = document.querySelector('.receipt');
-  function triggerWobble(){
-    receipt.classList.remove('wobble');
-    // force reflow so the animation can replay
-    void receipt.offsetWidth;
-    receipt.classList.add('wobble');
+  /* ---------- scroll-linked text reveal ---------- */
+  const revealEls = Array.from(document.querySelectorAll('[data-type]')).map(el=>{
+    el.dataset.full = el.textContent;
+    el.textContent = '';
+    return el;
+  });
+
+  function updateReveal(){
+    const vh = window.innerHeight;
+    const startY = vh * 0.92;   // reveal begins as element enters near bottom of viewport
+    const endY = vh * 0.4;      // fully revealed once element reaches upper-middle
+    revealEls.forEach(el=>{
+      const rect = el.getBoundingClientRect();
+      let progress = (startY - rect.top) / (startY - endY);
+      progress = Math.max(0, Math.min(1, progress));
+      const full = el.dataset.full;
+      const len = Math.round(progress * full.length);
+      el.textContent = full.slice(0, len);
+      if(len > 0 && len < full.length){
+        el.classList.add('typing-cursor');
+      } else {
+        el.classList.remove('typing-cursor');
+      }
+    });
   }
-  receipt.addEventListener('touchstart', triggerWobble, {passive:true});
-  receipt.addEventListener('click', triggerWobble);
-  receipt.addEventListener('animationend', () => receipt.classList.remove('wobble'));
+
+  let revealTicking = false;
+  function onRevealScroll(){
+    if(!revealTicking){
+      requestAnimationFrame(()=>{ updateReveal(); revealTicking = false; });
+      revealTicking = true;
+    }
+  }
+  window.addEventListener('scroll', onRevealScroll, {passive:true});
+  window.addEventListener('resize', onRevealScroll);
+  updateReveal();
+
+  /* ---------- chalkboard drawing ---------- */
+  (function(){
+    const canvas = document.getElementById('chalkboard');
+    const ctx = canvas.getContext('2d');
+    let color = '#f4f0e4';
+    let drawing = false;
+    let last = null;
+
+    function resize(){
+      const rect = canvas.getBoundingClientRect();
+      const dpr = window.devicePixelRatio || 1;
+      const prev = document.createElement('canvas');
+      prev.width = canvas.width; prev.height = canvas.height;
+      prev.getContext('2d').drawImage(canvas, 0, 0);
+      canvas.width = rect.width * dpr;
+      canvas.height = rect.height * dpr;
+      ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+      ctx.drawImage(prev, 0, 0, prev.width / dpr, prev.height / dpr);
+    }
+    window.addEventListener('resize', resize);
+    resize();
+
+    function pos(e){
+      const rect = canvas.getBoundingClientRect();
+      return { x: e.clientX - rect.left, y: e.clientY - rect.top };
+    }
+    function startDraw(e){
+      drawing = true;
+      last = pos(e);
+      canvas.setPointerCapture(e.pointerId);
+    }
+    function draw(e){
+      if(!drawing) return;
+      const p = pos(e);
+      ctx.strokeStyle = color;
+      ctx.lineWidth = 4.5;
+      ctx.lineCap = 'round';
+      ctx.lineJoin = 'round';
+      ctx.shadowColor = color;
+      ctx.shadowBlur = 2.5;
+      ctx.globalAlpha = 0.92;
+      ctx.beginPath();
+      ctx.moveTo(last.x, last.y);
+      ctx.lineTo(p.x, p.y);
+      ctx.stroke();
+      last = p;
+    }
+    function endDraw(){ drawing = false; last = null; }
+
+    canvas.addEventListener('pointerdown', startDraw);
+    canvas.addEventListener('pointermove', draw);
+    canvas.addEventListener('pointerup', endDraw);
+    canvas.addEventListener('pointerleave', endDraw);
+
+    document.querySelectorAll('.chalk-swatch').forEach(btn=>{
+      btn.addEventListener('click', ()=>{
+        document.querySelectorAll('.chalk-swatch').forEach(b=>b.classList.remove('active'));
+        btn.classList.add('active');
+        color = btn.dataset.color;
+      });
+    });
+    document.getElementById('chalkClear').addEventListener('click', ()=>{
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+    });
+  })();
+
+  /* ---------- receipt paper unfold + handwriting ---------- */
+  (function(){
+    const receipt = document.getElementById('receipt');
+
+    function typeHW(el, text, speed){
+      speed = speed || 34;
+      return new Promise(resolve=>{
+        el.textContent = '';
+        el.classList.add('typing-cursor');
+        let i = 0;
+        (function step(){
+          if(i <= text.length){
+            el.textContent = text.slice(0, i);
+            i++;
+            setTimeout(step, speed);
+          } else {
+            el.classList.remove('typing-cursor');
+            resolve();
+          }
+        })();
+      });
+    }
+
+    async function runHandwriting(){
+      await typeHW(document.getElementById('hwWhatsapp'), '+880 1631-001030');
+      await typeHW(document.getElementById('hwEmail'), 'saheluddin754@gmail.com', 26);
+      await typeHW(document.getElementById('hwResponse'), 'within 24h');
+    }
+
+    function triggerWobble(){
+      receipt.classList.remove('wobble');
+      void receipt.offsetWidth;
+      receipt.classList.add('wobble');
+    }
+
+    const foldIO = new IntersectionObserver((entries)=>{
+      entries.forEach(entry=>{
+        if(entry.isIntersecting){
+          receipt.classList.add('unfolded');
+          setTimeout(runHandwriting, 750);
+          foldIO.unobserve(receipt);
+        }
+      });
+    }, {threshold:0.3});
+    foldIO.observe(receipt);
+
+    receipt.addEventListener('touchstart', ()=>{
+      if(receipt.classList.contains('unfolded')) triggerWobble();
+    }, {passive:true});
+    receipt.addEventListener('click', ()=>{
+      if(receipt.classList.contains('unfolded')) triggerWobble();
+    });
+    receipt.addEventListener('animationend', ()=> receipt.classList.remove('wobble'));
+  })();
 </script>
 
 </body>
